@@ -1,0 +1,8 @@
+
+.clothCard:hover .card-body>.seeProd{
+    display: block;
+
+}
+.seeProd{
+    display: none;
+}

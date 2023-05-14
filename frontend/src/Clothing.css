@@ -1,0 +1,9 @@
+.color-block {
+    width: 50px;
+    /* adjust to your desired size */
+    height: 50px;
+    /* adjust to your desired size */
+    margin-right: 10px;
+    /* adjust to your desired spacing */
+    border-radius: 0.25rem;
+}
