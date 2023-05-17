@@ -7,6 +7,27 @@ const Clothing = (props) => {
     //we will fetch it from db and then display.
     let Obj = props.obj;
 
+    let tryOnModal = <div class="modal fade" id="tryOnModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class=" modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div className="text-center">
+                        <h1 class="modal-title fs-3" id="exampleModalToggleLabel">size en uygun modeli seçin</h1>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Show a second modal and hide this one with the button below.
+                </div>
+                <hr/>
+                <div class="text-center my-2">
+                    <button class="btn btn-primary btn-lg" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Try On <i class="bi bi-magic"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     return (
         <div style={{ backgroundColor: "rgba(18,39,61,0.15)" }}>
             <Navbar />
@@ -38,47 +59,47 @@ const Clothing = (props) => {
                                 <span className="text-secondary">Renk:</span>
                                 <div class="row mx-2">
                                     <div class="col-2">
-                                        <button type="button" class="btn btn-color color-block" style={{backgroundColor: "#F44336"}}></button>
+                                        <button type="button" class="btn btn-color color-block" style={{ backgroundColor: "#F44336" }}></button>
                                     </div>
                                     <div class="col-2">
-                                        <button type="button" class="btn btn-color color-block" style={{backgroundColor: "#E91E63"}}></button>
+                                        <button type="button" class="btn btn-color color-block" style={{ backgroundColor: "#E91E63" }}></button>
                                     </div>
                                     <div class="col-2">
-                                        <button type="button" class="btn btn-color color-block" style={{backgroundColor: "#9C27B0"}}></button>
+                                        <button type="button" class="btn btn-color color-block" style={{ backgroundColor: "#9C27B0" }}></button>
                                     </div>
                                     <div class="col-2">
-                                        <button type="button" class="btn btn-color color-block" style={{backgroundColor: "#673AB7"}}></button>
+                                        <button type="button" class="btn btn-color color-block" style={{ backgroundColor: "#673AB7" }}></button>
                                     </div>
                                     <div class="col-2">
-                                        <button type="button" class="btn btn-color color-block" style={{backgroundColor: "#3F51B5"}}></button>
+                                        <button type="button" class="btn btn-color color-block" style={{ backgroundColor: "#3F51B5" }}></button>
                                     </div>
                                     <div class="col-2">
-                                        <button type="button" class="btn btn-color color-block" style={{backgroundColor: "#2196F3"}}></button>
+                                        <button type="button" class="btn btn-color color-block" style={{ backgroundColor: "#2196F3" }}></button>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="mt-4 d-flex">
-                                <div class="container text-center">
-                                    <span className="text-secondary">Miktar:</span >
-                                    <div class="input-group mb-3 col-3">
-                                        <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
-                                        <input type="text" class="form-control text-center" placeholder="0" aria-label="quantity" aria-describedby="button-addon1"/>
-                                        <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
-                                    </div>
+                            <div class="container mt-5 d-flex justify-content-start">
+                                <span className="text-secondary">Miktar:</span >
+                                <div class="input-group mb-3 col-3 text-start mx-5" style={{ maxWidth: "200px", margin: "0" }}>
+                                    <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
+                                    <input type="number" min={1} class="form-control text-center" width={12} placeholder="1" aria-label="quantity" aria-describedby="button-addon1" />
+                                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">+</button>
                                 </div>
-
-                                {/* <span className="text-secondary">Miktar:</span>
-                                <div>
-                                    <button className=" bg-secondary rounded-circle"> - </button>
-                                </div> */}
-
                             </div>
+>>>>   ao clicar no dene, open new window and show some models (https://getbootstrap.com/docs/5.3/components/modal/   in extra large modal). from up to dows. Person chooses and we process and show her the results.
 
-
+                            <div className="d-flex justify-content-start">
+                                <span className="text-secondary">Toplam fiyat:</span >
+                                <h4 className="mx-3">8.936,40 TL</h4>
+                            </div>
+                            <div className="mt-3 d-flex justify-content-around">
+                                <button data-bs-toggle="modal" data-bs-target="#tryOnModal" className="btn btn-lg m-0" style={{ backgroundColor: "#14243b", color: '#cea949' }}>Bu Kıyafeti dene <i class="bi bi-magic"></i></button>
+                                <button className="btn btn-lg" style={{ backgroundColor: "#14243b", color:'#cea949'}}>Sepete ekle <i class="bi bi-cart"></i></button>
+                            </div>
+                            {tryOnModal}
                         </div>
                     </div>
-
                 </section>
             </div>
             <Footer />

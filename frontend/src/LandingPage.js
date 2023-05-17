@@ -42,7 +42,6 @@ const LandingPage = () => {
                                     <small class="card-text"><span className="text-warning"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-half"></i></span> (200)</small>
                                     <small className="fw-bold" style={{color:"red"}}><i class="bi bi-graph-down-arrow"></i>Son 30 Günün En Düşük Fiyatı!</small>
                                     <small className="fw-bold fs-4">{Math.round(Math.random() * (300 - 75) + 75)} tl</small>
-
                                 </div>
                                 <div className="text-center mt-3 seeProd">
                                     <a href="#" class="btn" style={{ backgroundColor: "#14243b", color: "#cea949" }}>Kıyafeti dene <i class="bi bi-magic"></i></a>                                    
