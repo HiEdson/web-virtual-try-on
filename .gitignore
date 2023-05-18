@@ -5,6 +5,8 @@ serverAi/preprocessing/__pycache__
 serverAi/preprocessing/openpose/__pycache__
 serverAi/preprocessing/openpose/model/
 serverAi/checkpoints
+serverAi/static/
+serverAi/test/
 frontend/node_modules
 # serverAi/eval_models/
 serverAi/eval_models/weights/v0.1/mtviton.pth
