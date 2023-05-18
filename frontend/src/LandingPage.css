@@ -3,6 +3,8 @@
     display: block;
 
 }
-.seeProd{
-    display: none;
+
+.clothCard a{
+    text-decoration: none;
+    color: black;
 }
