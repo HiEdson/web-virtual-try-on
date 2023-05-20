@@ -12,10 +12,12 @@ class CPDatasetTest(data.Dataset):
     """
         Test Dataset for CP-VTON.
     """
-    def __init__(self, opt):
+    def __init__(self, opt, im_names, c_names):
         super(CPDatasetTest, self).__init__()
         # base setting
         self.opt = opt
+        self.im_names = im_names
+        self.c_names = c_names
         self.root = opt.dataroot
         self.datamode = opt.datamode # train or test or self-defined
         self.data_list = opt.data_list
@@ -35,8 +37,10 @@ class CPDatasetTest(data.Dataset):
         # c_names = ['01260_00.jpg', '01430_00.jpg', '09933_00.jpg']
         # im_names = ['00891_00.jpg']
         # c_names = ['01260_00.jpg']
-        im_names = ['00100_00.jpg']
-        c_names = ['00100_00.jpg']
+        # im_names = ['00100_00.jpg']
+        # c_names = ['00100_00.jpg']
+        im_names = [im_names]
+        c_names = [c_names]
 
         # print(osp.join(opt.dataroot, opt.data_list))
         # temp_path = osp.join(opt.dataroot, opt.data_list).replace('\\', '/')
@@ -229,14 +233,14 @@ class CPDatasetTest(data.Dataset):
         
         # load pose points
         pose_name = im_name.replace('.jpg', '_rendered.png')
-        temp_pose = osp.join(self.data_path, 'openpose-img', pose_name).replace('\\', '/') #openpose_img
-        pose_map = Image.open(temp_pose).convert('RGB')  # added convert('RGB')
+        temp_pose = osp.join(self.data_path, 'openpose_img', pose_name).replace('\\', '/') #openpose_img
+        pose_map = Image.open(temp_pose)
         pose_map = transforms.Resize(self.fine_width, interpolation=2)(pose_map)
         pose_map = self.transform(pose_map)  # [-1,1]
         # print('this image is-------->', pose_map, len(pose_map), pose_map.shape)
         # return
         pose_name = im_name.replace('.jpg', '_keypoints.json')
-        with open(osp.join(self.data_path, 'openpose-json', pose_name).replace('\\', '/'), 'r') as f: #openpose_json
+        with open(osp.join(self.data_path, 'openpose_json', pose_name).replace('\\', '/'), 'r') as f: #openpose_json
             pose_label = json.load(f)
             pose_data = pose_label['people'][0]['pose_keypoints_2d']
             pose_data = np.array(pose_data)
