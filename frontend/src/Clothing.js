@@ -3,22 +3,49 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import './Clothing.css';
 import modelImg from './03615_00.jpg'
+import axios from 'axios';
 
 
 const Clothing = (props) => {
+    const [productId, setProductId] = useState(null)
     const [targetModel, setTargetModel] = useState(null)
     const [amount, setAmount] = useState(1)
-    const [price, setPrice] = useState(8936.40)
+    const [price, setPrice] = useState(0)
+    const [product, setproduct] = useState(null)
     //props will be the id of that obj
     //we will fetch it from db and then display.
     let Obj = props.obj;
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+        const currentURL = window.location.href;
+        const stringAfterDash = currentURL.substring(currentURL.lastIndexOf("-") + 1);
+        setProductId(stringAfterDash)
+        // console.log(stringAfterDash)
+        if (productId) {
+            axios.get(`http://localhost:5000/product/${productId}`)
+                .then((response) => {
+                    // console.log('target obj------------>', response.data[0])
+                    setproduct(response.data[0])
+                    setPrice(response.data[0].price)
+                })
+                .catch((e) => {
+                    console.log(e)
+                })
+        }
+    }, [productId])
 
-
-
+    let models = ['00071_00.jpg', '00259_00.jpg', '00278_00.jpg', '00373_00.jpg', '00828_00.jpg',
+        '01123_00.jpg', '01163_00.jpg', '01341_00.jpg', '01713_00.jpg', '03178_00.jpg', '03445_00.jpg',
+        '04783_00.jpg', '07694_00.jpg', '07913_00.jpg', '08217_00.jpg', '09940_00.jpg', '13198_00.jpg', '14675_00.jpg']
+    
+    let modelList = models.map((img, key)=>{
+        return(
+            <button className="mb-2 border-0" onClick={(e) => { setTargetModel(img) }}>
+                <img src={`http://localhost:5000/static/image/${img}`} style={{ width: "100%", height: "200px", objectFit: "fill" }} />
+            </button>
+        )
+    })
 
     let tryOnModal = <div class="modal fade" id="tryOnModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
         <div class=" modal-dialog modal-xl">
@@ -33,7 +60,8 @@ const Clothing = (props) => {
                     <div className="row">
                         <div className="col-md-2" style={{ maxHeight: "60vh", overflowY: "scroll" }}>
                             {/* Should be mapped */}
-                            <button className="mb-2 border-0" onClick={(e) => { setTargetModel(modelImg) }}>
+                            {modelList}
+                            {/* <button className="mb-2 border-0" onClick={(e) => { setTargetModel(modelImg) }}>
                                 <img src={modelImg} style={{ width: "100%", height: "200px", objectFit: "fill" }} />
                             </button>
                             <button className="mb-2 border-0" onClick={(e) => { setTargetModel(modelImg) }}>
@@ -41,7 +69,7 @@ const Clothing = (props) => {
                             </button>
                             <button className="mb-2 border-0" onClick={(e) => { setTargetModel("https://images.unsplash.com/photo-1613005798967-632017e477c8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80") }}>
                                 <img src="https://images.unsplash.com/photo-1613005798967-632017e477c8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" style={{ width: "100%", height: "200px", objectFit: "fill" }} />
-                            </button>
+                            </button> */}
 
                         </div>
 
@@ -51,7 +79,7 @@ const Clothing = (props) => {
                                     {
                                         !targetModel ?
                                             <span></span> :
-                                            <img src={targetModel} style={{ width: "100%", height: "350px" }} />
+                                            <img src={`http://localhost:5000/static/image/${targetModel}`} style={{ width: "100%", height: "350px" }} />
                                     }
                                     {/* <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" style={{ width: "100%", height: "350px" }} />  */}
                                 </div>
@@ -59,7 +87,7 @@ const Clothing = (props) => {
                                     <i class="bi bi-plus-circle fs-1 align-middle"></i>
                                 </div>
                                 <div className="col-md-5">
-                                    <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" style={{ width: "100%", height: "350px" }} />
+                                    <img src={`http://localhost:5000/static/cloth/${product?.image}`} style={{ width: "100%", height: "350px" }} />
                                 </div>
                             </div>
                         </div>
@@ -83,13 +111,13 @@ const Clothing = (props) => {
                 <section className="container py-5 bg-white rounded-4">
                     <div className="row pb-5">
                         <div className="col-md-6">
-                            <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" style={{ width: "100%" }} />
+                            <img src={`http://localhost:5000/static/cloth/${product?.image}`} style={{ width: "100%" }} />
                         </div>
 
                         <div className="col-md-6">
-                            <h4>Cerrahpaşa Tıp Fakültesi Model 9 Üç İplik Şardonlu Hoodie</h4>
+                            <h4>Cerrahpaşa {product?.product_name}</h4>
                             <hr />
-                            <h1>{price} TL <span className="fs-5 text-secondary">/adet</span></h1>
+                            <h1>{product?.price} TL <span className="fs-5 text-secondary">/adet</span></h1>
                             <div className="d-flex justify-content-start mt-5">
                                 <span className="text-secondary">Beden:</span>
                                 <div className="mx-2">
@@ -101,7 +129,7 @@ const Clothing = (props) => {
                                     <button className="btn border border-1 mx-2">XL</button>
                                 </div>
                             </div>
-
+                            {/* <img src='http://localhost:5000/static/image/00071_00.jpg'/> */}
                             <div class="d-flex mt-5">
                                 <span className="text-secondary">Renk:</span>
                                 <div class="row mx-2">
@@ -143,15 +171,13 @@ const Clothing = (props) => {
                                             setAmount(value);
                                         }
                                     }} value={amount}
-                                    class="form-control text-center" width={12} placeholder="1" aria-label="quantity" aria-describedby="button-addon1" />
+                                        class="form-control text-center" width={12} placeholder="1" aria-label="quantity" aria-describedby="button-addon1" />
                                     <button class="btn btn-outline-secondary" type="button" id="button-addon2"
                                         onClick={() => { setAmount(amount + 1) }}>
                                         +
                                     </button>
                                 </div>
                             </div>
->>>> Connectar com backend, ver como pegar as imagens do back para o front and display it. Start with tests.(tomorow)
-
                             <div className="d-flex justify-content-start">
                                 <span className="text-secondary">Toplam fiyat:</span >
                                 <h4 className="mx-3">{(price * amount).toFixed(2)} TL</h4>
@@ -165,7 +191,7 @@ const Clothing = (props) => {
                     </div>
                 </section>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     )
 }
