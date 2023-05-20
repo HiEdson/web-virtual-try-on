@@ -14,6 +14,7 @@ const Clothing = (props) => {
     const [product, setproduct] = useState(null)
     const [cloth, setCloth] = useState(null)
     const [notValidmodelSms, setNotValidmodelSms] = useState(false)
+    const [genImg, setGenImg] = useState(false)
     //props will be the id of that obj
     //we will fetch it from db and then display.
     let Obj = props.obj;
@@ -51,6 +52,9 @@ const Clothing = (props) => {
             cloth: cloth
         }})
             .then((response) => {
+                if(response.data=='g'){
+                    setGenImg(true)
+                }
             })
             .catch((e) => {
                 console.log(e)
@@ -78,34 +82,78 @@ let tryOnModal = <div class="modal fade" id="tryOnModal" aria-hidden="true" aria
                 <div className="text-center">
                     <h1 class="modal-title fs-3" id="exampleModalToggleLabel">size en uygun modeli seçin</h1>
                 </div>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                 onClick={()=>{setGenImg(false)}}></button>
             </div>
-            <div class="modal-body">
-                <div className="row">
-                    <div className="col-md-2" style={{ maxHeight: "60vh", overflowY: "scroll" }}>
-                        {modelList}
-                    </div>
 
-                    <div className="col-md-8">
-                        <div className="row">
-                            <div className="col-md-5">
+            <div class="modal-body">        
+                <div className="row container">
+                    {!genImg ?
+                        <div className="col-md-2" style={{ maxHeight: "60vh", overflowY: "scroll" }}>
+                            {modelList}
+                        </div> : <span></span>
+                    }
+
+                    <div className={`col-md-${!genImg ? '10':'12'}`}>
+                        <div className="row text-center">
+                            <div className="col-md-5 d-flex align-items-center justify-content-center">
                                 {
-                                    !targetModel ?
-                                        <span></span> :
-                                        <img src={`http://localhost:5000/static/image/${targetModel}`} style={{ width: "100%", height: "350px" }} />
+                                    !targetModel && !genImg ?
+                                        <span></span>
+                                        : genImg ?
+                                            <img src={`http://localhost:5000/static/generatedTryOn/${targetModel.split('.')[0] + "_" + cloth.split('.')[0]}.png`}
+                                                style={{ width: "100%", height: "100%" }} />
+                                            : <img src={`http://localhost:5000/static/image/${targetModel}`} style={{ width: "100%", height: "350px" }} />
                                 }
-                                {/* <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" style={{ width: "100%", height: "350px" }} />  */}
                             </div>
                             <div className="col-md-2 d-flex justify-content-center align-items-center">
-                                <i class="bi bi-plus-circle fs-1 align-middle"></i>
+                                {!genImg ?
+                                    <i className="bi bi-plus-circle fs-1 align-middle"></i>
+                                    :
+                                    <i className="bi bi-arrow-left-circle-fill fs-1 align-middle"></i>
+                                }
                             </div>
-                            <div className="col-md-5">
+                            <div className={`col-md-${!genImg ?'5':'4'} d-flex align-items-center justify-content-center`}>
+                                <img src={`http://localhost:5000/static/cloth/${product?.image}`} style={{ width: "100%", height: "350px" }} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                {/* <div className="row">
+                    {!genImg?
+                        <div className="col-md-2" style={{ maxHeight: "60vh", overflowY: "scroll" }}>
+                            {modelList}
+                        </div>:<span></span>
+                    }
+
+                    <div className="col-md-10">
+                        <div className="row text-center">
+                            <div className={`col-md-5`}>
+                                {
+                                    !targetModel && !genImg?
+                                        <span></span> 
+                                        : genImg ? <img src={`http://localhost:5000/static/generatedTryOn/${targetModel.split('.')[0]+"_"+cloth.split('.')[0]}.png`}
+                                         style={{ width: "100%", height: "100%" }} />
+                                        :<img src={`http://localhost:5000/static/image/${targetModel}`} style={{ width: "100%", height: "350px" }} />
+                                }
+                                {/* <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" style={{ width: "100%", height: "350px" }} />  /}
+                            </div>
+                            <div className={`col-md-2 d-flex justify-content-center align-items-center`}>
+                                {!genImg?
+                                    <i class="bi bi-plus-circle fs-1 align-middle"></i>
+                                    :
+                                    <i class="bi bi-arrow-left-circle-fill fs-1 align-middle"></i>
+                                }
+                            </div>
+                            <div className={`col-md-5 d-flex align-items-center justify-content-center`}>
                                 <img src={`http://localhost:5000/static/cloth/${product?.image}`} style={{ width: "100%", height: "350px" }} />
                             </div>
                         </div>
                     </div>
 
-                </div>
+                </div> */}
             </div>
             <hr />
             <div className="text-center my-2">

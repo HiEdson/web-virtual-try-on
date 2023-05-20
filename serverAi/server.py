@@ -133,16 +133,22 @@ def generate_try_on():
     targetModel = request.args.get('targetModel')
     cloth = request.args.get('cloth')
     generatedImgName = targetModel.split('.')[0]+"_"+cloth.split('.')[0]+'.png'
+    image_path = os.path.join('./static/generatedTryOn', generatedImgName)
 
-    if()
+    if os.path.isfile(image_path):
+        return 'g'
+    else:
+       try:
+        mainGen(targetModel, cloth)
+        return 'g'
+       except:
+           return 'f'  # failure
+
     # print('the value will be ', generatedImgName, file=sys.stdout)
-    mainGen(targetModel, cloth)
 
-    return 'super'
-    
+    # return 'super'
+
     # print(request.args.get('targetModel'), file=sys.stdout)
-
-
 
 
 if __name__ == '__main__':
