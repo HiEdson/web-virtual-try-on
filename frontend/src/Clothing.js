@@ -12,6 +12,8 @@ const Clothing = (props) => {
     const [amount, setAmount] = useState(1)
     const [price, setPrice] = useState(0)
     const [product, setproduct] = useState(null)
+    const [cloth, setCloth] = useState(null)
+    const [notValidmodelSms, setNotValidmodelSms] = useState(false)
     //props will be the id of that obj
     //we will fetch it from db and then display.
     let Obj = props.obj;
@@ -28,6 +30,7 @@ const Clothing = (props) => {
                     // console.log('target obj------------>', response.data[0])
                     setproduct(response.data[0])
                     setPrice(response.data[0].price)
+                    setCloth(response.data[0].image)
                 })
                 .catch((e) => {
                     console.log(e)
@@ -35,13 +38,22 @@ const Clothing = (props) => {
         }
     }, [productId])
 
+    const generateTryOn=(e)=>{
+        e.preventDefault()
+        if(!targetModel){
+            setNotValidmodelSms(true)
+            return
+        } 
+        console.log('super, generated')
+    }
+
     let models = ['00071_00.jpg', '00259_00.jpg', '00278_00.jpg', '00373_00.jpg', '00828_00.jpg',
         '01123_00.jpg', '01163_00.jpg', '01341_00.jpg', '01713_00.jpg', '03178_00.jpg', '03445_00.jpg',
         '04783_00.jpg', '07694_00.jpg', '07913_00.jpg', '08217_00.jpg', '09940_00.jpg', '13198_00.jpg', '14675_00.jpg']
-    
-    let modelList = models.map((img, key)=>{
-        return(
-            <button className="mb-2 border-0" onClick={(e) => { setTargetModel(img) }}>
+
+    let modelList = models.map((img, key) => {
+        return (
+            <button className="mb-2 border-0" onClick={(e) => { setTargetModel(img); setNotValidmodelSms(false)}}>
                 <img src={`http://localhost:5000/static/image/${img}`} style={{ width: "100%", height: "200px", objectFit: "fill" }} />
             </button>
         )
@@ -59,18 +71,7 @@ const Clothing = (props) => {
                 <div class="modal-body">
                     <div className="row">
                         <div className="col-md-2" style={{ maxHeight: "60vh", overflowY: "scroll" }}>
-                            {/* Should be mapped */}
                             {modelList}
-                            {/* <button className="mb-2 border-0" onClick={(e) => { setTargetModel(modelImg) }}>
-                                <img src={modelImg} style={{ width: "100%", height: "200px", objectFit: "fill" }} />
-                            </button>
-                            <button className="mb-2 border-0" onClick={(e) => { setTargetModel(modelImg) }}>
-                                <img src={modelImg} style={{ width: "100%", height: "200px", objectFit: "fill" }} />
-                            </button>
-                            <button className="mb-2 border-0" onClick={(e) => { setTargetModel("https://images.unsplash.com/photo-1613005798967-632017e477c8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80") }}>
-                                <img src="https://images.unsplash.com/photo-1613005798967-632017e477c8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" style={{ width: "100%", height: "200px", objectFit: "fill" }} />
-                            </button> */}
-
                         </div>
 
                         <div className="col-md-8">
@@ -95,8 +96,15 @@ const Clothing = (props) => {
                     </div>
                 </div>
                 <hr />
-                <div class="text-center my-2">
-                    <button class="btn btn-primary btn-lg" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Try On <i class="bi bi-magic"></i></button>
+                <div className="text-center my-2">
+                     {notValidmodelSms ?
+                        <div className="alert alert-danger mt-2" role="alert">
+                            Bir model seçmelisiniz!
+                        </div> : <span></span>
+                    }
+                    <button className="btn btn-primary btn-lg"
+                        onClick={(e) => {generateTryOn(e)}}>Try On <i className="bi bi-magic"></i></button>
+                   
                 </div>
             </div>
         </div>
