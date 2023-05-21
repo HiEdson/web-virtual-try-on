@@ -28,7 +28,6 @@ const Clothing = (props) => {
         if (productId) {
             axios.get(`http://localhost:5000/product/${productId}`)
                 .then((response) => {
-                    // console.log('target obj------------>', response.data[0])
                     setproduct(response.data[0])
                     setPrice(response.data[0].price)
                     setCloth(response.data[0].image)
@@ -41,9 +40,6 @@ const Clothing = (props) => {
 
     const generateTryOn = (e) => {
         e.preventDefault()
-        setIsGenerating(true)
-
-        return
         if (!targetModel) {
             setNotValidmodelSms(true)
             return
@@ -88,22 +84,27 @@ const Clothing = (props) => {
             <div class="modal-content">
                 <div class="modal-header">
                     <div className="text-center">
-                        <h1 class="modal-title fs-3" id="exampleModalToggleLabel">size en uygun modeli seçin</h1>
+                        {!genImg?
+                            <h1 class="modal-title fs-3" id="exampleModalToggleLabel">size en uygun modeli seçin</h1>:
+                            <div className="text-end">
+                                <button className="btn btn-lg" style={{ backgroundColor: "#14243b", color: '#cea949' }}>Sepete ekle <i class="bi bi-cart"></i></button>
+                            </div>
+                        }
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         onClick={() => { setGenImg(false); setIsGenerating(false) }}></button>
                 </div>
 
                 <div class="modal-body card-img-overlay bg-overlay">
-                    <div class={`text-center d-${isGenerating ? "flex" :"none"}  justify-content-center`}>
-                        <div style={{top: "50%", position: "absolute"}}>
-                            <div class="spinner-border fs-1" role="status" style={{width: "4rem", height: "4rem"}}></div>
+                    <div class={`text-center d-${isGenerating ? "flex" : "none"}  justify-content-center`}>
+                        <div style={{ top: "50%", position: "absolute" }}>
+                            <div class="spinner-border fs-1" role="status" style={{ width: "4rem", height: "4rem" }}></div>
                             <br />
                             <span class=""><b>Sihir gerçekleşiyor, lütfen bekleyin...</b></span>
                         </div>
                     </div>
-                    
-                    <div className="row container" style={{ opacity: `${isGenerating ? "0.2" : "1"}`}}>
+
+                    <div className="row container" style={{ opacity: `${isGenerating ? "0.2" : "1"}` }}>
                         {!genImg ?
                             <div className="col-md-2" style={{ maxHeight: "60vh", overflowY: "scroll" }}>
                                 {modelList}
@@ -146,10 +147,13 @@ const Clothing = (props) => {
                     {
                         isGenerating ?
                             <button className="btn btn-primary btn-lg" disabled>Try On <i className="bi bi-magic"></i>
-                            </button> :
+                            </button> :!genImg?
                             <button className="btn btn-primary btn-lg unable"
                                 onClick={(e) => { generateTryOn(e) }}>Try On <i className="bi bi-magic"></i>
-                            </button>
+                            </button>:
+                                <button className="btn btn-primary btn-lg unable"
+                                    onClick={(e) => { setGenImg(false) }}>Tekrar dene
+                                </button>
                     }
 
                 </div>
