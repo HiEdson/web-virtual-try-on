@@ -11,7 +11,7 @@ from flask_cors import CORS
 from preprocessing.openpose.body import Body
 from preprocessing.openpose.util import draw_bodypose
 from get_parse_agnostic import saveParseAgnostic
-from test_generator import main
+from test_generator import mainGen
 import requests
 from productData import produts
 
@@ -126,6 +126,29 @@ def targetProduct(target):
             break
 
     return jsonify(matching_object)
+
+
+@app.route('/product/generate_try_on')
+def generate_try_on():
+    targetModel = request.args.get('targetModel')
+    cloth = request.args.get('cloth')
+    generatedImgName = targetModel.split('.')[0]+"_"+cloth.split('.')[0]+'.png'
+    image_path = os.path.join('./static/generatedTryOn', generatedImgName)
+
+    if os.path.isfile(image_path):
+        return 'g'
+    else:
+       try:
+        mainGen(targetModel, cloth)
+        return 'g'
+       except:
+           return 'f'  # failure
+
+    # print('the value will be ', generatedImgName, file=sys.stdout)
+
+    # return 'super'
+
+    # print(request.args.get('targetModel'), file=sys.stdout)
 
 
 if __name__ == '__main__':

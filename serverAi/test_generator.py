@@ -7,8 +7,8 @@ from torchvision.utils import save_image
 import argparse
 import os
 import time
+import sys
 from cp_dataset_test import CPDatasetTest, CPDataLoader
-
 from networks import ConditionGenerator, load_checkpoint, make_grid
 from network_generator import SPADEGenerator
 from tensorboardX import SummaryWriter
@@ -35,10 +35,10 @@ def get_opt():
     parser.add_argument('--cuda',default=False, help='cuda or cpu')
 
     parser.add_argument('--test_name', type=str, default='test', help='test name')
-    parser.add_argument("--dataroot", default="./test") #./data/zalando-hd-resize
+    parser.add_argument("--dataroot", default="./static") #./data/zalando-hd-resize
     parser.add_argument("--datamode", default="test")
     parser.add_argument("--data_list", default="test_pairs.txt")
-    parser.add_argument("--output_dir", type=str, default="./Output")
+    parser.add_argument("--output_dir", type=str, default="./static/generatedTryOn")
     parser.add_argument("--datasetting", default="unpaired")
     parser.add_argument("--fine_width", type=int, default=768)
     parser.add_argument("--fine_height", type=int, default=1024)
@@ -111,6 +111,7 @@ def test(opt, test_loader, tocg, generator):
     os.makedirs(grid_dir, exist_ok=True)
     
     os.makedirs(output_dir, exist_ok=True)
+
     
     #here we will just run for 1 image, not for all load
     num = 0
@@ -259,28 +260,28 @@ def test(opt, test_loader, tocg, generator):
                                         (im[i]/2 +0.5), (output[i].cpu()/2 +0.5)],
                                         nrow=4)
                 unpaired_name = (inputs['c_name']['paired'][i].split('.')[0] + '_' + inputs['c_name'][opt.datasetting][i].split('.')[0] + '.png')
-                save_image(grid, os.path.join(grid_dir, unpaired_name))
+                # save_image(grid, os.path.join(grid_dir, unpaired_name))
                 unpaired_names.append(unpaired_name)
-                
+
             # save output
             save_images(output, unpaired_names, output_dir)
-                
-            num += shape[0]
-            print(num)
+            # print('the value was saved in {} as {}'.format(output_dir,generatedImgName+'.png'))
+            # save_images(output, generatedImgName+'.png', output_dir)
+            
+            # num += shape[0]
+            # print(num)
 
-    print(f"Test time {time.time() - iter_start_time}")
+    # print(f"Test time {time.time() - iter_start_time}")
 
 
-def main():
+def mainGen(im_names, c_names):
     opt = get_opt()
     # print(opt)
     print("Start to test %s!")
     os.environ["CUDA_VISIBLE_DEVICES"] = opt.gpu_ids
-    
-    print('until here its okay')
 
     # create test dataset & loader
-    test_dataset = CPDatasetTest(opt)
+    test_dataset = CPDatasetTest(opt, im_names, c_names)
     test_loader = CPDataLoader(opt, test_dataset)
     
     # visualization
@@ -307,7 +308,8 @@ def main():
     test(opt, test_loader, tocg, generator)
 
     print("Finished testing!")
+ 
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     mainGen()
