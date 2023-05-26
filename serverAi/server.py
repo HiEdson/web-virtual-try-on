@@ -144,12 +144,6 @@ def generate_try_on():
        except:
            return 'f'  # failure
 
-    # print('the value will be ', generatedImgName, file=sys.stdout)
-
-    # return 'super'
-
-    # print(request.args.get('targetModel'), file=sys.stdout)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

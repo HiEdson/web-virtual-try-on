@@ -84,8 +84,8 @@ const Clothing = (props) => {
             <div class="modal-content">
                 <div class="modal-header">
                     <div className="text-center">
-                        {!genImg?
-                            <h1 class="modal-title fs-3" id="exampleModalToggleLabel">size en uygun modeli seçin</h1>:
+                        {!genImg ?
+                            <h1 class="modal-title fs-3" id="exampleModalToggleLabel">size en uygun modeli seçin</h1> :
                             <div className="text-end">
                                 <button className="btn btn-lg" style={{ backgroundColor: "#14243b", color: '#cea949' }}>Sepete ekle <i class="bi bi-cart"></i></button>
                             </div>
@@ -147,10 +147,10 @@ const Clothing = (props) => {
                     {
                         isGenerating ?
                             <button className="btn btn-primary btn-lg" disabled>Try On <i className="bi bi-magic"></i>
-                            </button> :!genImg?
-                            <button className="btn btn-primary btn-lg unable"
-                                onClick={(e) => { generateTryOn(e) }}>Try On <i className="bi bi-magic"></i>
-                            </button>:
+                            </button> : !genImg ?
+                                <button className="btn btn-primary btn-lg unable"
+                                    onClick={(e) => { generateTryOn(e) }}>Try On <i className="bi bi-magic"></i>
+                                </button> :
                                 <button className="btn btn-primary btn-lg unable"
                                     onClick={(e) => { setGenImg(false) }}>Tekrar dene
                                 </button>

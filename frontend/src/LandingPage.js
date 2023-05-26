@@ -46,19 +46,21 @@ const LandingPage = () => {
         )
     }) : <span>edson</span>
 
-    console.log(products)
+    // console.log(products)
     return (
         <div style={{ backgroundColor: "rgba(18,39,61,0.15)" }}>
             <Navbar />
-            <div className="MainImg container-fluid" style={{ maxHeight: "400px", marginBottom: "10%" }}>
+            <div className="MainImg container-fluid" style={{ maxHeight: "400px", marginBottom: "10%",
+                backgroundImage: "linear-gradient(to right, #14243b, #15263e, #152741, #162945, #162b48)" }}>      
                 <div className="row">
-                    <div className=" col-md-7 d-flex align-items-center ">
+                    <div className=" col-md-7 d-flex align-items-center">
                         <div className="container">
-                            <h1 className="fs-2 mx-5">Satın almadan denemek mümkün mü?</h1>
-                            <h2 className="mx-5">Tabiki canım...</h2>
+                            <h1 className="fs-2 mx-5 text-white">Satın almadan denemek mümkün mü?</h1>
+                            <h2 className="mx-5 text-white">Tabiki canım...</h2>
 
                             <a href="#" class="text-decoration-none mx-5">
-                                <button class="btn btn-outline-light btn-lg px-5 mt-3" style={{ backgroundColor: "#14243b", color: "#cea949" }}>
+                                <button class="btn btn-outline-light btn-lg px-5 mt-3 bg-black"
+                                    style={{ backgroundColor: "#14243b", color: "#cea949" }}>
                                     Keşfet <i class="bi bi-magic"></i>
                                 </button>
                             </a>
@@ -73,118 +75,7 @@ const LandingPage = () => {
 
             <section className="container">
                 <div className="row">
-
                     {productsList}
-
-
-                    {/* <div className="col-md-3 mb-5">
-                        <div class="card clothCard">
-                            <Link to={'/something'}>
-                                <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" class="card-img-top" alt="imagem da roupa" />
-                                <div class="card-body">
-                                    <h6 class="card-title">Cerrahpaşa Tıp Fakültesi Model 9 Üç İplik Şardonlu Hoodie</h6>
-                                    <div className="d-flex flex-column">
-                                        <small class="card-text"><span className="text-warning"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-half"></i></span> (200)</small>
-                                        <small className="fw-bold" style={{ color: "red" }}><i class="bi bi-graph-down-arrow"></i>Son 30 Günün En Düşük Fiyatı!</small>
-                                        <small className="fw-bold fs-4">{Math.round(Math.random() * (300 - 75) + 75)} tl</small>
-                                    </div>
-                                    <div className="text-center mt-3">
-                                        <Link to={'/something'} href="#" class="btn" style={{ backgroundColor: "#14243b", color: "#cea949" }}>Kıyafeti dene <i class="bi bi-magic"></i></Link>
-                                    </div>
-                                </div>
-                            </Link>
-                        </div>
-                    </div> */}
-
-                    {/* <div className="col-md-3 mb-5">
-                        <div class="card clothCard">
-                            <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" class="card-img-top" alt="imagem da roupa" />
-                            <div class="card-body">
-                                <h6 class="card-title">Cerrahpaşa Tıp Fakültesi Model 9 Üç İplik Şardonlu Hoodie</h6>
-                                <div className="d-flex flex-column">
-                                    <small class="card-text"><span className="text-warning"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-half"></i></span> (200)</small>
-                                    <small className="fw-bold" style={{ color: "red" }}><i class="bi bi-graph-down-arrow"></i>Son 30 Günün En Düşük Fiyatı!</small>
-                                    <small className="fw-bold fs-4">{Math.round(Math.random() * (300 - 75) + 75)} tl</small>
-
-                                </div>
-                                <div className="text-center mt-3 seeProd">
-                                    <a href="#" class="btn" style={{ backgroundColor: "#14243b", color: "#cea949" }}>Kıyafeti dene <i class="bi bi-magic"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-3 mb-5">
-                        <div class="card clothCard">
-                            <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" class="card-img-top" alt="imagem da roupa" />
-                            <div class="card-body">
-                                <h6 class="card-title">Cerrahpaşa Tıp Fakültesi Model 9 Üç İplik Şardonlu Hoodie</h6>
-                                <div className="d-flex flex-column">
-                                    <small class="card-text"><span className="text-warning"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-half"></i></span> (200)</small>
-                                    <small className="fw-bold" style={{ color: "red" }}><i class="bi bi-graph-down-arrow"></i>Son 30 Günün En Düşük Fiyatı!</small>
-                                    <small className="fw-bold fs-4">{Math.round(Math.random() * (300 - 75) + 75)} tl</small>
-
-                                </div>
-                                <div className="text-center mt-3 seeProd">
-                                    <a href="#" class="btn" style={{ backgroundColor: "#14243b", color: "#cea949" }}>Kıyafeti dene <i class="bi bi-magic"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-3 mb-5">
-                        <div class="card clothCard">
-                            <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" class="card-img-top" alt="imagem da roupa" />
-                            <div class="card-body">
-                                <h6 class="card-title">Cerrahpaşa Tıp Fakültesi Model 9 Üç İplik Şardonlu Hoodie</h6>
-                                <div className="d-flex flex-column">
-                                    <small class="card-text"><span className="text-warning"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-half"></i></span> (200)</small>
-                                    <small className="fw-bold" style={{ color: "red" }}><i class="bi bi-graph-down-arrow"></i>Son 30 Günün En Düşük Fiyatı!</small>
-                                    <small className="fw-bold fs-4">{Math.round(Math.random() * (300 - 75) + 75)} tl</small>
-
-                                </div>
-                                <div className="text-center mt-3 seeProd">
-                                    <a href="#" class="btn" style={{ backgroundColor: "#14243b", color: "#cea949" }}>Kıyafeti dene <i class="bi bi-magic"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-3 mb-5">
-                        <div class="card clothCard">
-                            <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" class="card-img-top" alt="imagem da roupa" />
-                            <div class="card-body">
-                                <h6 class="card-title">Cerrahpaşa Tıp Fakültesi Model 9 Üç İplik Şardonlu Hoodie</h6>
-                                <div className="d-flex flex-column">
-                                    <small class="card-text"><span className="text-warning"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-half"></i></span> (200)</small>
-                                    <small className="fw-bold" style={{ color: "red" }}><i class="bi bi-graph-down-arrow"></i>Son 30 Günün En Düşük Fiyatı!</small>
-                                    <small className="fw-bold fs-4">{Math.round(Math.random() * (300 - 75) + 75)} tl</small>
-
-                                </div>
-                                <div className="text-center mt-3 seeProd">
-                                    <a href="#" class="btn" style={{ backgroundColor: "#14243b", color: "#cea949" }}>Kıyafeti dene <i class="bi bi-magic"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-md-3 mb-5">
-                        <div class="card clothCard">
-                            <img src="https://productimages.hepsiburada.net/s/70/1000/110000011538476.jpg" class="card-img-top" alt="imagem da roupa" />
-                            <div class="card-body">
-                                <h6 class="card-title">Cerrahpaşa Tıp Fakültesi Model 9 Üç İplik Şardonlu Hoodie</h6>
-                                <div className="d-flex flex-column">
-                                    <small class="card-text"><span className="text-warning"><i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-fill"></i> <i class="bi bi-star-half"></i></span> (200)</small>
-                                    <small className="fw-bold" style={{ color: "red" }}><i class="bi bi-graph-down-arrow"></i>Son 30 Günün En Düşük Fiyatı!</small>
-                                    <small className="fw-bold fs-4">{Math.round(Math.random() * (300 - 75) + 75)} tl</small>
-
-                                </div>
-                                <div className="text-center mt-3 seeProd">
-                                    <a href="#" class="btn" style={{ backgroundColor: "#14243b", color: "#cea949" }}>Kıyafeti dene <i class="bi bi-magic"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                 </div>
             </section>
             <Footer />

@@ -91,12 +91,6 @@ def load_checkpoint_G(model, checkpoint_path):  # , opt
 
 def test(opt, test_loader, tocg, generator):
     gauss = tgm.image.GaussianBlur((15, 15), (3, 3))
-    # if opt.cuda:
-    #     gauss = gauss.cuda()
-    
-    # Model
-    # if opt.cuda :
-    #     tocg.cuda()
     tocg.eval()
     generator.eval()
     
@@ -119,31 +113,9 @@ def test(opt, test_loader, tocg, generator):
     with torch.no_grad():
         for inputs in test_loader.data_loader:
             if opt.cuda :
-                #of course it will not be executed because i will do inference in cpt
                 pass
-                # pose_map = inputs['pose'].cuda()
-                # pre_clothes_mask = inputs['cloth_mask'][opt.datasetting].cuda()
-                # label = inputs['parse']
-                # parse_agnostic = inputs['parse_agnostic']
-                # agnostic = inputs['agnostic'].cuda()
-                # clothes = inputs['cloth'][opt.datasetting].cuda() # target cloth
-                # densepose = inputs['densepose'].cuda()
-                # im = inputs['image']
-                # input_label, input_parse_agnostic = label.cuda(), parse_agnostic.cuda()
-                # pre_clothes_mask = torch.FloatTensor((pre_clothes_mask.detach().cpu().numpy() > 0.5).astype(np.float)).cuda()
             else :
                 pose_map = inputs['pose']
-                # print('the value of pre_clothes is ',
-                #       inputs['cloth_mask']['unpaired'])
-                # pre_clothes_mask = inputs['cloth_mask']['unpaired']
-                
-                # while(pre_clothes_mask==None):
-                #     try:
-                #         pre_clothes_mask = inputs['cloth_mask']['unpaired']
-                #     except Exception as e:
-                #         # print('file not processed yet')
-                #         # time.sleep(1)
-                #         pre_clothes_mask = inputs['cloth_mask']['unpaired']
                 try:
                     pre_clothes_mask = inputs['cloth_mask']['unpaired']
                 except KeyError as e:
@@ -153,7 +125,6 @@ def test(opt, test_loader, tocg, generator):
                         pre_clothes_mask = inputs['cloth_mask']['unpaired']
                 
 
-                # pre_clothes_mask = inputs['cloth_mask']['unpaired'] #inputs['cloth_mask'][opt.datasetting]
                 label = inputs['parse']
                 parse_agnostic = inputs['parse_agnostic']
                 agnostic = inputs['agnostic']
@@ -265,13 +236,6 @@ def test(opt, test_loader, tocg, generator):
 
             # save output
             save_images(output, unpaired_names, output_dir)
-            # print('the value was saved in {} as {}'.format(output_dir,generatedImgName+'.png'))
-            # save_images(output, generatedImgName+'.png', output_dir)
-            
-            # num += shape[0]
-            # print(num)
-
-    # print(f"Test time {time.time() - iter_start_time}")
 
 
 def mainGen(im_names, c_names):
@@ -284,11 +248,6 @@ def mainGen(im_names, c_names):
     test_dataset = CPDatasetTest(opt, im_names, c_names)
     test_loader = CPDataLoader(opt, test_dataset)
     
-    # visualization
-    # if not os.path.exists(opt.tensorboard_dir):
-    #     os.makedirs(opt.tensorboard_dir)
-    # board = SummaryWriter(log_dir=os.path.join(opt.tensorboard_dir, opt.test_name, opt.datamode, opt.datasetting))
-
     ## Model
     # tocg
     input1_nc = 4  # cloth + cloth-mask
@@ -307,9 +266,4 @@ def mainGen(im_names, c_names):
     # Train
     test(opt, test_loader, tocg, generator)
 
-    print("Finished testing!")
  
-
-
-# if __name__ == "__main__":
-#     mainGen()
